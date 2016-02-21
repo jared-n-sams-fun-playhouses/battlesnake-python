@@ -1,6 +1,34 @@
 import bottle
 import os
 
+def is_valid(request,move):
+    move_coords = get_direction(move)
+
+    if (1 + move_coords[0] == request.width):
+        return False
+
+    if (1 + move_coords[1] == request.height):
+   	    return False
+
+    return True
+
+
+def get_direction(move):
+   return {
+       'north' : [0,-1],
+       'south' : [0,1],
+       'west' : [-1,0],
+       'east' : [1,0]
+   }.get(move,'north')
+
+
+def valid_moves(request):
+    directions = {'north','south','west','east'}
+    for move in directions
+        if not is_valid(request,move):
+           directions.discard(move)
+    return directions
+
 
 @bottle.route('/static/<path:path>')
 def static(path):
@@ -35,7 +63,7 @@ def start():
 def move():
     data = bottle.request.json
 
-    print(data['height'])
+    print(data['width'], data['height'])
     # TODO: Do things with data
 
     return {
