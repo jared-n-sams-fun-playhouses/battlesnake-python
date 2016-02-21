@@ -9,6 +9,7 @@ from bs_globals import *
 from gets import *
 from checks import *
 
+last_location = None
 
 def valid_moves(request):
     good = []
@@ -16,11 +17,25 @@ def valid_moves(request):
     us = get_our_snake(request)
     our_head = us['coords'][0]
 
+    print("head coord: {}".format(our_head))
+
     list_of_moves = get_possible_move_points(our_head)
+
+    print("list of moves: {}".format(list_of_moves))
+
+    for direction, point in list_of_moves.items():
+        #print("{}: {}: {}".format(direction, point, is_edge(point)))
+        if (is_edge(direction, point, { 'min_x': 0, 'min_y': 0, 'max_x': request['width'], 'max_y': request['height'] })):
+            print("{}: is edge".format(direction))
 
     for move in directions:
         if is_valid(request,move):
             good.append(move)
+
+    if debug:
+        print("available moves: {}".format(good))
+        if (len(good) == 4):
+            print("problem, valid move set has 4, needs to less than 4")
 
     return good
 
@@ -47,10 +62,8 @@ def index():
 def start():
     data = bottle.request.json
 
-    board_size = { 'min_x': 0, 'min_y': 0, 'max_x': data['width'], 'max_y': data['height'] }
-
-    if debug:
-        print("board size: {}\n".format(board_size))
+    #if debug:
+    #    print("board size: {}\n".format(board_size))
 
     return {
         'taunt': 'glhf'
@@ -65,18 +78,18 @@ def move():
 
     invalid_moves = get_invalid_move_points(data)
 
-    if debug:
-        print("available moves: {}".format(available))
-
-    if (len(available) == 4):
-        print("problem, available move set has 4\n")
-
     random.shuffle(available)
 
     print("move: {}".format(available[0]))
 
+    print("turn: {}".format(data['turn']))
+
+    us = get_our_snake(data)
+    our_head = us['coords'][0]
+    print("head: {}".format(our_head))
+
     return {
-        'move': available[0],
+        'move': 'south',
         'taunt': get_taunt()
     }
 

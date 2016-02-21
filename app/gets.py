@@ -46,8 +46,8 @@ def get_possible_move_points(coord):
     return {
         'north': [ (coord[0]), (coord[1] - 1) ],
         'south': [ (coord[0]), (coord[1] + 1) ],
-        'west' : [ (coord[0] - 1), (coord[1]) ],
-        'east' : [ (coord[0] + 1), (coord[1]) ]
+        'east' : [ (coord[0] + 1), (coord[1]) ],
+        'west' : [ (coord[0] - 1), (coord[1]) ]
     }
 
 
@@ -55,7 +55,8 @@ def get_invalid_move_points(request):
     no_good = []
 
     for snake in request['snakes']:
-        no_good.append(snake['coords'])
+        for coord in snake['coords']:
+            no_good.append(coord)
 
     if debug:
         print("invalid points: {}".format(no_good))

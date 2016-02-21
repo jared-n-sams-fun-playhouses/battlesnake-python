@@ -7,10 +7,21 @@ def new_is_valid(coord):
         return False
 
 
-def is_edge(coord):
-    for key, value in board_size:
+def is_edge(direction, coord, board_bounds):
+    for key, value in board_bounds.items():
+        print(coord)
+        print("{} {}".format(key,value))
         # north
-        if (coord[0] <= value):
+        if (direction == 'north' and key == 'min_y' and coord[1] <= value):
+            return True
+        # south
+        elif (direction == 'south' and key == 'max_y' and coord[1] >= value):
+            return True
+        # east
+        elif (direction == 'east' and key == 'max_x' and coord[0] >= value):
+            return True
+        # west
+        elif (direction == 'west' and key == 'min_x' and coord[0] <= value):
             return True
 
     return False
@@ -40,22 +51,22 @@ def is_valid(request, move):
 
     # north wall
     if (move == 'north'):
-        if(our_head[1] + move_coords[1] <= 0):
+        if(our_head[1] + move_coords[1] < 0):
             return False
 
     # east wall
     if (move == 'east'):
-      if(our_head[0] + move_coords[0] >= (request['width'] - 1)):
+      if(our_head[0] + move_coords[0] > (request['width'] - 1)):
         return False
 
     # south wall
     if (move == 'south'):
-        if(our_head[1] + move_coords[1] >= (request['height'] - 1)):
+        if(our_head[1] + move_coords[1] > (request['height'] - 1)):
            return False
 
     # west wall
     if (move == 'west'):
-        if (our_head[0] + move_coords[0] <= 0):
+        if (our_head[0] + move_coords[0] < 0):
             return False
 
     return True
