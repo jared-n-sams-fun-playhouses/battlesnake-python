@@ -3,15 +3,14 @@ import os
 
 def is_valid(request,move):
     move_coords = get_direction(move)
-
-    if (1 + move_coords[0] == request.width):
+#replace 1 with our snake's head coordinates
+    if (1 + move_coords[0] == request['width']):
         return False
 
-    if (1 + move_coords[1] == request.height):
+    if (1 + move_coords[1] == request['height']):
    	    return False
 
     return True
-
 
 def get_direction(move):
    return {
@@ -24,7 +23,7 @@ def get_direction(move):
 
 def valid_moves(request):
     directions = {'north','south','west','east'}
-    for move in directions
+    for move in directions:
         if not is_valid(request,move):
            directions.discard(move)
     return directions
