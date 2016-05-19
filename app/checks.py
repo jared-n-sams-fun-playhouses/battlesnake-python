@@ -7,21 +7,21 @@ def new_is_valid(coord):
         return False
 
 
-def is_edge(direction, coord, board_bounds):
+def is_edge(direction, vertex, board_bounds):
     for key, value in board_bounds.items():
-        print(coord)
+        print(vertex)
         print("{} {}".format(key,value))
         # north
-        if (direction == 'north' and key == 'min_y' and coord[1] <= value):
+        if (direction == 'north' and key == 'min_y' and vertex[1] <= value):
             return True
         # south
-        elif (direction == 'south' and key == 'max_y' and coord[1] >= value):
+        elif (direction == 'south' and key == 'max_y' and vertex[1] >= value):
             return True
         # east
-        elif (direction == 'east' and key == 'max_x' and coord[0] >= value):
+        elif (direction == 'east' and key == 'max_x' and vertex[0] >= value):
             return True
         # west
-        elif (direction == 'west' and key == 'min_x' and coord[0] <= value):
+        elif (direction == 'west' and key == 'min_x' and vertex[0] <= value):
             return True
 
     return False

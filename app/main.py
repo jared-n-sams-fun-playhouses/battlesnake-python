@@ -74,6 +74,10 @@ def start():
 def move():
     data = bottle.request.json
 
+    us = get_our_snake(data)
+    our_head = us['coords'][0]
+    print("head: {}".format(our_head))
+
     available = valid_moves(data)
 
     invalid_moves = get_invalid_move_points(data)
@@ -83,10 +87,6 @@ def move():
     print("move: {}".format(available[0]))
 
     print("turn: {}".format(data['turn']))
-
-    us = get_our_snake(data)
-    our_head = us['coords'][0]
-    print("head: {}".format(our_head))
 
     return {
         'move': 'south',
